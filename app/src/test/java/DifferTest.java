@@ -13,15 +13,23 @@ public class DifferTest {
     String jsonPath1 = Paths.get("./src/test/resources/fixtures/file1.json").toAbsolutePath().normalize().toString();
     String jsonPath2 = Paths.get("./src/test/resources/fixtures/file2.json").toAbsolutePath().normalize().toString();
 
+    String ymlPath1 = Paths.get("./src/test/resources/fixtures/file1.yml").toAbsolutePath().normalize().toString();
+    String ymlPath2 = Paths.get("./src/test/resources/fixtures/file2.yml").toAbsolutePath().normalize().toString();
+
     Path stylishExpectedPAth = Paths.get("./src/test/resources/fixtures/stylishExpected.txt")
             .toAbsolutePath().normalize();
 
     @Test
-    @DisplayName("Should be equal")
-    public void testGenerate() throws Exception {
+    @DisplayName("JSON format test")
+    public void testGenerateJson() throws Exception {
         String stylishExpected = Files.readString(stylishExpectedPAth);
-
         assertEquals(stylishExpected, Differ.generate(jsonPath1, jsonPath2));
+    }
 
+    @Test
+    @DisplayName("YML format test")
+    public void testGenerateYml() throws Exception {
+        String stylishExpected = Files.readString(stylishExpectedPAth);
+        assertEquals(stylishExpected, Differ.generate(ymlPath1, ymlPath2));
     }
 }
