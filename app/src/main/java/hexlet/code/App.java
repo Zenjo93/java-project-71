@@ -11,10 +11,12 @@ public class App implements Callable<Integer> {
     @CommandLine.Option(names = { "-h", "--help" }, usageHelp = true, description = "Show this help message and exit.")
     boolean usageHelpRequested;
 
-    @CommandLine.Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
+    @CommandLine.Option(names = {"-V", "--version"}, versionHelp = true,
+            description = "Print version information and exit.")
     boolean versionInfoRequested;
 
-    @CommandLine.Option(names = { "-f", "--format" }, paramLabel = "format", defaultValue = "stylish", description = "output format [default: stylish]")
+    @CommandLine.Option(names = { "-f", "--format" }, paramLabel = "format", defaultValue = "stylish",
+            description = "output format [default: stylish]")
     String format;
 
     @CommandLine.Parameters(paramLabel = "filepath1", description = "path to first file")
@@ -25,7 +27,7 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception { // your business logic goes here...
-            Differ.generate(filepath1, filepath2);
+        Differ.generate(filepath1, filepath2);
         return 0;
     }
 

@@ -1,17 +1,16 @@
 package hexlet.code;
 
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Differ {
 
@@ -33,7 +32,7 @@ public class Differ {
 
     public static Map<String, Object> getData(String content) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<TreeMap<String,Object>>(){});
+        return objectMapper.readValue(content, new TypeReference<TreeMap<String, Object>>() { });
     }
 
     public static String readFile(String path) throws Exception {
@@ -48,19 +47,14 @@ public class Differ {
         StringBuilder diff = new StringBuilder("{\n");
 
         for (String key : uniqueKeys) {
-            // если не было в первом - добавлен
             if (!data1.containsKey(key)) {
                 diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-            }
-            // если нет во втором - удалено
-            else if (!data2.containsKey(key)) {
+            } else if (!data2.containsKey(key)) {
                 diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
-            }
-            else if (!data1.get(key).equals(data2.get(key))) {
+            } else if (!data1.get(key).equals(data2.get(key))) {
                 diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
                 diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-            }
-            else {
+            } else {
                 diff.append("    ").append(key).append(": ").append(data1.get(key)).append("\n");
             }
         }
