@@ -4,6 +4,7 @@ package hexlet.code;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,14 +22,13 @@ public class Differ {
         String fileType1 = getFileType(path1);
         String fileType2 = getFileType(path2);
 
-        // Парсинг (в зависимости от типа файлов)
         Map<String, Object> data1 = getData(file1, fileType1);
         Map<String, Object> data2 = getData(file2, fileType2);
 
-        // Передается уже распарсенный файл (json / yml)
-        String diff = formatDiff(data1, data2);
+        List<Map> tree = AstBuilder.build(data1, data2);
 
-        System.out.println(diff);
+        String diff = Formatter.format(tree);
+
 
         return diff;
     }
@@ -42,25 +42,26 @@ public class Differ {
         return Files.readString(absolutePath);
     }
 
-    public static String formatDiff(Map<String, Object> data1, Map<String, Object> data2) {
-        Set<String> uniqueKeys = new TreeSet<>(data1.keySet());
-        uniqueKeys.addAll(data2.keySet());
-
-        StringBuilder diff = new StringBuilder("{\n");
-
-        for (String key : uniqueKeys) {
-            if (!data1.containsKey(key)) {
-                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-            } else if (!data2.containsKey(key)) {
-                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
-            } else if (!data1.get(key).equals(data2.get(key))) {
-                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
-                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-            } else {
-                diff.append("    ").append(key).append(": ").append(data1.get(key)).append("\n");
-            }
-        }
-
-        return diff.append("}").toString();
-    }
 }
+
+//    public static String formatDiff(Map<String, Object> data1, Map<String, Object> data2) {
+//        Set<String> uniqueKeys = new TreeSet<>(data1.keySet());
+//        uniqueKeys.addAll(data2.keySet());
+//
+//        StringBuilder diff = new StringBuilder("{\n");
+//
+//        for (String key : uniqueKeys) {
+//            if (!data1.containsKey(key)) {
+//                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
+//            } else if (!data2.containsKey(key)) {
+//                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
+//            } else if (!data1.get(key).equals(data2.get(key))) {
+//                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
+//                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
+//            } else {
+//                diff.append("    ").append(key).append(": ").append(data1.get(key)).append("\n");
+//            }
+//        }
+//
+//        return diff.append("}").toString();
+//    }
