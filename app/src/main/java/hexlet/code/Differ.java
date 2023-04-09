@@ -15,6 +15,15 @@ public class Differ {
 
     // TODO: stylish значения по дефолту, через перегрузку методов
     public static String generate(String path1, String path2) throws Exception {
+        String format = "stylish";
+        return makeDiff(path1, path2, format);
+    }
+
+    public static String generate(String path1, String path2, String format) throws Exception {
+        return makeDiff(path1, path2, format);
+    }
+
+    private static String makeDiff(String path1, String path2, String format) throws Exception {
 
         String file1 = readFile(path1);
         String file2 = readFile(path2);
@@ -27,11 +36,14 @@ public class Differ {
 
         List<Map> tree = AstBuilder.build(data1, data2);
 
+        // мб c format
         String diff = Formatter.format(tree);
-
 
         return diff;
     }
+
+
+
 
     public static String getFileType(String file) {
         return file.substring(file.lastIndexOf(".") + 1);
@@ -43,25 +55,3 @@ public class Differ {
     }
 
 }
-
-//    public static String formatDiff(Map<String, Object> data1, Map<String, Object> data2) {
-//        Set<String> uniqueKeys = new TreeSet<>(data1.keySet());
-//        uniqueKeys.addAll(data2.keySet());
-//
-//        StringBuilder diff = new StringBuilder("{\n");
-//
-//        for (String key : uniqueKeys) {
-//            if (!data1.containsKey(key)) {
-//                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-//            } else if (!data2.containsKey(key)) {
-//                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
-//            } else if (!data1.get(key).equals(data2.get(key))) {
-//                diff.append("  - ").append(key).append(": ").append(data1.get(key)).append("\n");
-//                diff.append("  + ").append(key).append(": ").append(data2.get(key)).append("\n");
-//            } else {
-//                diff.append("    ").append(key).append(": ").append(data1.get(key)).append("\n");
-//            }
-//        }
-//
-//        return diff.append("}").toString();
-//    }
