@@ -15,8 +15,8 @@ public class Differ {
 
     // TODO: stylish значения по дефолту, через перегрузку методов
     public static String generate(String path1, String path2) throws Exception {
-        String format = "stylish";
-        return makeDiff(path1, path2, format);
+        String defaultFormat = "stylish";
+        return makeDiff(path1, path2, defaultFormat);
     }
 
     public static String generate(String path1, String path2, String format) throws Exception {
@@ -36,8 +36,7 @@ public class Differ {
 
         List<Map> tree = AstBuilder.build(data1, data2);
 
-        // мб c format
-        String diff = Formatter.format(tree);
+        String diff = Formatter.format(tree, format);
 
         return diff;
     }
