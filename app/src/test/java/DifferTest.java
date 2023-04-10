@@ -22,6 +22,10 @@ public class DifferTest {
     Path plainExpectedPAth = Paths.get("./src/test/resources/fixtures/plainExpected.txt")
             .toAbsolutePath().normalize();
 
+    Path jsonExpectedPath = Paths.get("./src/test/resources/fixtures/jsonExpected.json")
+            .toAbsolutePath().normalize();
+
+
     @Test
     @DisplayName("Stylish format test JSON")
     public void testGenerateStylishJson() throws Exception {
@@ -49,4 +53,14 @@ public class DifferTest {
         String plainExpected = Files.readString(plainExpectedPAth);
         assertEquals(plainExpected, Differ.generate(ymlPath1, ymlPath2, "plain"));
     }
+
+    // TODO: json tests
+    @Test
+    @DisplayName("Json")
+    public void testGenerateJson() throws Exception {
+        String jsonExpected = Files.readString(jsonExpectedPath);
+        assertEquals(jsonExpected, Differ.generate(jsonPath1, jsonPath2, "json"));
+    }
+
+
 }

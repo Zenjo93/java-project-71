@@ -16,7 +16,6 @@ public class Plain {
         diffTree.append(stringTree);
 
         return diffTree.toString().trim();
-
     }
 
     private static String mapping(Map<String, Object> node) {
