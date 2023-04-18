@@ -1,4 +1,5 @@
 import hexlet.code.Differ;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,22 +10,31 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
+    static String jsonPath1;
+    static String jsonPath2;
+    static String ymlPath1;
+    static String ymlPath2;
+    static Path stylishExpectedPAth;
+    static Path plainExpectedPAth;
+    static Path jsonExpectedPath;
 
+    @BeforeAll
+    public static void initVariables() {
+        jsonPath1 = Paths.get("./src/test/resources/fixtures/file1.json").toAbsolutePath().normalize().toString();
+        jsonPath2 = Paths.get("./src/test/resources/fixtures/file2.json").toAbsolutePath().normalize().toString();
 
-    String jsonPath1 = Paths.get("./src/test/resources/fixtures/file1.json").toAbsolutePath().normalize().toString();
-    String jsonPath2 = Paths.get("./src/test/resources/fixtures/file2.json").toAbsolutePath().normalize().toString();
+        ymlPath1 = Paths.get("./src/test/resources/fixtures/file1.yml").toAbsolutePath().normalize().toString();
+        ymlPath2 = Paths.get("./src/test/resources/fixtures/file2.yml").toAbsolutePath().normalize().toString();
 
-    String ymlPath1 = Paths.get("./src/test/resources/fixtures/file1.yml").toAbsolutePath().normalize().toString();
-    String ymlPath2 = Paths.get("./src/test/resources/fixtures/file2.yml").toAbsolutePath().normalize().toString();
+        stylishExpectedPAth = Paths.get("./src/test/resources/fixtures/stylishExpected.txt")
+                .toAbsolutePath().normalize();
 
-    Path stylishExpectedPAth = Paths.get("./src/test/resources/fixtures/stylishExpected.txt")
-            .toAbsolutePath().normalize();
+        plainExpectedPAth = Paths.get("./src/test/resources/fixtures/plainExpected.txt")
+                .toAbsolutePath().normalize();
 
-    Path plainExpectedPAth = Paths.get("./src/test/resources/fixtures/plainExpected.txt")
-            .toAbsolutePath().normalize();
-
-    Path jsonExpectedPath = Paths.get("./src/test/resources/fixtures/jsonExpected.json")
-            .toAbsolutePath().normalize();
+        jsonExpectedPath = Paths.get("./src/test/resources/fixtures/jsonExpected.json")
+                .toAbsolutePath().normalize();
+    }
 
 
     @Test
@@ -54,19 +64,5 @@ public class DifferTest {
         String plainExpected = Files.readString(plainExpectedPAth);
         assertEquals(plainExpected, Differ.generate(ymlPath1, ymlPath2, "plain"));
     }
-
-//    @Test
-//    @DisplayName("JsonToJson")
-//    public void testGenerateJson() throws Exception {
-//        String jsonExpected = Files.readString(jsonExpectedPath);
-//        assertEquals(jsonExpected, Differ.generate(jsonPath1, jsonPath2, "json"));
-//    }
-//
-//    @Test
-//    @DisplayName("YmlToJson")
-//    public void testGenerateJsonFromYml() throws Exception {
-//        String jsonExpected = Files.readString(jsonExpectedPath);
-//        assertEquals(jsonExpected, Differ.generate(ymlPath1, ymlPath2, "json"));
-//    }
 
 }
