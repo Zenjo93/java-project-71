@@ -22,11 +22,11 @@ public class App implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "filepath1", description = "path to first file")
     String filepath1;
 
-    @CommandLine.Parameters(paramLabel = "filepath2", description = "path to first file")
+    @CommandLine.Parameters(paramLabel = "filepath2", description = "path to second file")
     String filepath2;
 
     @Override
-    public Integer call() throws Exception { // your business logic goes here...
+    public Integer call() throws Exception {
         Differ.generate(filepath1, filepath2, format);
         return 0;
     }

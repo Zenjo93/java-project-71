@@ -11,7 +11,6 @@ import static hexlet.code.Parser.getData;
 
 public class Differ {
 
-    // TODO: stylish значения по дефолту, через перегрузку методов
     public static String generate(String path1, String path2) throws Exception {
         String defaultFormat = "stylish";
         return makeDiff(path1, path2, defaultFormat);
@@ -36,11 +35,10 @@ public class Differ {
 
         String diff = Formatter.format(tree, format);
 
+        System.out.println(diff);
+
         return diff;
     }
-
-
-
 
     public static String getFileType(String file) {
         return file.substring(file.lastIndexOf(".") + 1);

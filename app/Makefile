@@ -1,5 +1,5 @@
 run-dist:
-	./build/install/app/bin/app build/resources/main/file1.json build/resources/main/file2.json
+	./build/install/app/bin/app build/resources/test/fixtures/file1.json build/resources/test/fixtures/file2.json
 
 clean:
 	./gradlew clean
