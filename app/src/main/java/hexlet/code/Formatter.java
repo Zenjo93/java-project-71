@@ -16,11 +16,12 @@ public class Formatter {
         }
         if (format.equals("plain")) {
             return Plain.format(tree);
-        } if (format.equals("json")) {
-            return Json.format(tree);
         }
-
-        else return "";
+        if (format.equals("json")) {
+            return Json.format(tree);
+        } else {
+            return "";
+        }
 
     }
 

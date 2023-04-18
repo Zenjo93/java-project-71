@@ -1,7 +1,5 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Formatter;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +21,15 @@ public class Plain {
 
         switch (type) {
             case "added" -> {
-                return "Property " + "'" + node.get("name") + "'" + " was added with value: " + stringify(node.get("value")) + "\n";
+                return "Property " + "'" + node.get("name") + "'"
+                        + " was added with value: " + stringify(node.get("value")) + "\n";
             }
             case "deleted" -> {
                 return "Property " + "'" + node.get("name") + "'" + " was removed" + "\n";
             }
             case "changed" -> {
-                return "Property " + "'" +  node.get("name") + "'" + " was updated. From " + stringify(node.get("value1")) + " to " + stringify(node.get("value2")) + "\n";
+                return "Property " + "'" +  node.get("name") + "'" + " was updated. From "
+                        + stringify(node.get("value1")) + " to " + stringify(node.get("value2")) + "\n";
             }
             default -> {
                 return "";
@@ -37,17 +37,14 @@ public class Plain {
         }
     }
 
-    private static String stringify (Object value) {
+    private static String stringify(Object value) {
         if (value == null) {
             return "null";
-        }
-        else if (value instanceof Boolean) {
+        } else if (value instanceof Boolean) {
             return value.toString();
-        }
-        else if (value instanceof Integer) {
+        } else if (value instanceof Integer) {
             return value.toString();
-        }
-        else if (value instanceof Collection<?> || value instanceof Map<?,?>) {
+        } else if (value instanceof Collection<?> || value instanceof Map<?, ?>) {
             return "[complex value]";
         }
         return "'" + value + "'";

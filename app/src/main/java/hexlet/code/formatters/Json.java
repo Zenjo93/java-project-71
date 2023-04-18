@@ -11,7 +11,6 @@ public class Json {
     public static String format(List<Map> tree) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tree);
-        
         return jsonString;
     }
 }

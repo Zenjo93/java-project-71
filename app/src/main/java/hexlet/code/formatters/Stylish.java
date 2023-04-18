@@ -1,7 +1,5 @@
 package hexlet.code.formatters;
 
-import hexlet.code.Formatter;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +40,7 @@ public class Stylish {
         }
     }
 
-    private static String stringify (Object value) {
+    private static String stringify(Object value) {
         if (value == null) {
             return "null";
         }
