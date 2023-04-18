@@ -10,13 +10,12 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
-    static String jsonPath1;
-    static String jsonPath2;
-    static String ymlPath1;
-    static String ymlPath2;
-    static Path stylishExpectedPAth;
-    static Path plainExpectedPAth;
-    static Path jsonExpectedPath;
+    private static String jsonPath1;
+    private static String jsonPath2;
+    private static String ymlPath1;
+    private static String ymlPath2;
+    private static Path stylishExpectedPAth;
+    private static Path plainExpectedPAth;
 
     @BeforeAll
     public static void initVariables() {
@@ -32,8 +31,6 @@ public class DifferTest {
         plainExpectedPAth = Paths.get("./src/test/resources/fixtures/plainExpected.txt")
                 .toAbsolutePath().normalize();
 
-        jsonExpectedPath = Paths.get("./src/test/resources/fixtures/jsonExpected.json")
-                .toAbsolutePath().normalize();
     }
 
 
