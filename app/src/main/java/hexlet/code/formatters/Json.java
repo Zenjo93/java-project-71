@@ -10,7 +10,7 @@ public class Json {
 
     public static String format(List<Map> tree) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(tree);
+        String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tree);
         return jsonString;
     }
 }

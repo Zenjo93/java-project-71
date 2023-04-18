@@ -1,6 +1,5 @@
 package hexlet.code;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,9 +47,4 @@ public class AstBuilder {
         return ast;
     }
 }
-
-// если ключи есть в обоих, но разные значения
-
-
-
 
