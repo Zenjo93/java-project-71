@@ -16,6 +16,9 @@ lint:
 test:
 	./gradlew test
 
+report:
+	./gradlew jacocoTestReport
+
 help:
 	./build/install/app/bin/app -h
 
