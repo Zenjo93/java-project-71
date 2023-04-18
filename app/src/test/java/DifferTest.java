@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
 
+
     String jsonPath1 = Paths.get("./src/test/resources/fixtures/file1.json").toAbsolutePath().normalize().toString();
     String jsonPath2 = Paths.get("./src/test/resources/fixtures/file2.json").toAbsolutePath().normalize().toString();
 

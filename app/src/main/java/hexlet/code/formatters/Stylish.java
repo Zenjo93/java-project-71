@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class Stylish {
 
+    private static final int INDENT_COUNT = 4;
+
     public static String format(List<Map> tree) {
         StringBuilder diffTree = new StringBuilder("{\n");
 
@@ -28,7 +30,7 @@ public class Stylish {
                 return " " + " - " + node.get("name") + ": " + stringify(node.get("value"));
             }
             case "unchanged" -> {
-                return " ".repeat(4) + node.get("name") + ": " + stringify(node.get("value"));
+                return " ".repeat(INDENT_COUNT) + node.get("name") + ": " + stringify(node.get("value"));
             }
             case "changed" -> {
                 return " " + " - " + node.get("name") + ": " + stringify(node.get("value1")) + "\n"
