@@ -1,8 +1,10 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,52 +16,68 @@ public class DifferTest {
     private static String jsonPath2;
     private static String ymlPath1;
     private static String ymlPath2;
-    private static Path stylishExpectedPAth;
-    private static Path plainExpectedPAth;
+    private static String stylishExpected;
+    private static String plainExpected;
+    private static String jsonExpected;
+    private static ObjectMapper mapper;
 
-    @BeforeAll
-    public static void initVariables() {
-        jsonPath1 = Paths.get("./src/test/resources/fixtures/file1.json").toAbsolutePath().normalize().toString();
-        jsonPath2 = Paths.get("./src/test/resources/fixtures/file2.json").toAbsolutePath().normalize().toString();
-
-        ymlPath1 = Paths.get("./src/test/resources/fixtures/file1.yml").toAbsolutePath().normalize().toString();
-        ymlPath2 = Paths.get("./src/test/resources/fixtures/file2.yml").toAbsolutePath().normalize().toString();
-
-        stylishExpectedPAth = Paths.get("./src/test/resources/fixtures/stylishExpected.txt")
-                .toAbsolutePath().normalize();
-
-        plainExpectedPAth = Paths.get("./src/test/resources/fixtures/plainExpected.txt")
-                .toAbsolutePath().normalize();
-
+    public static Path getAbsolutePath(String fileName) {
+        Path basePath = Paths.get("").toAbsolutePath();
+        Path filePath = Paths.get("src", "test", "resources", "fixtures", fileName);
+        return basePath.resolve(filePath).normalize();
     }
 
+    @BeforeAll
+    public static void initVariables() throws IOException {
+        mapper = new ObjectMapper();
+
+        jsonPath1 = getAbsolutePath("file1.json").toString();
+        jsonPath2 = getAbsolutePath("file2.json").toString();
+
+        ymlPath1 = getAbsolutePath("file1.yml").toString();
+        ymlPath2 = getAbsolutePath("file2.yml").toString();
+
+        stylishExpected = Files.readString(getAbsolutePath("stylishExpected.txt"));
+        plainExpected = Files.readString(getAbsolutePath("plainExpected.txt"));
+        jsonExpected = Files.readString(getAbsolutePath("jsonExpected.json"));
+    }
 
     @Test
-    @DisplayName("Stylish format test JSON")
+    @DisplayName("Format stylish: json files")
     public void testGenerateStylishJson() throws Exception {
-        String stylishExpected = Files.readString(stylishExpectedPAth);
         assertEquals(stylishExpected, Differ.generate(jsonPath1, jsonPath2));
     }
 
     @Test
-    @DisplayName("Stylish format test YML")
+    @DisplayName("Format stylish: yml files")
     public void testGenerateStylishYml() throws Exception {
-        String stylishExpected = Files.readString(stylishExpectedPAth);
         assertEquals(stylishExpected, Differ.generate(ymlPath1, ymlPath2));
     }
 
     @Test
-    @DisplayName("plain format test Json")
+    @DisplayName("Format plain: json files")
     public void testGeneratePlainJson() throws Exception {
-        String plainExpected = Files.readString(plainExpectedPAth);
         assertEquals(plainExpected, Differ.generate(jsonPath1, jsonPath2, "plain"));
     }
 
     @Test
-    @DisplayName("plain format test YML")
+    @DisplayName("Format plain: yml files")
     public void testGeneratePlainYml() throws Exception {
-        String plainExpected = Files.readString(plainExpectedPAth);
         assertEquals(plainExpected, Differ.generate(ymlPath1, ymlPath2, "plain"));
+    }
+
+    @Test
+    @DisplayName("Format json: json files")
+    public void testGenerateJsonfromJson() throws Exception {
+        String actual = Differ.generate(jsonPath1, jsonPath2, "json");
+        assertEquals(mapper.readTree(jsonExpected), mapper.readTree(actual));
+    }
+
+    @Test
+    @DisplayName("Format json: json files")
+    public void testGenerateJsonFromYml() throws Exception {
+        String actual = Differ.generate(ymlPath1, ymlPath2, "json");
+        assertEquals(mapper.readTree(jsonExpected), mapper.readTree(actual));
     }
 
 }
