@@ -31,7 +31,7 @@ public class Differ {
         Map<String, Object> data1 = getData(file1, fileType1);
         Map<String, Object> data2 = getData(file2, fileType2);
 
-        List<Map> tree = AbstractSyntaxTreeBuilder.build(data1, data2);
+        List<Map<String, Object>> tree = AbstractSyntaxTreeBuilder.build(data1, data2);
 
         String diff = Formatter.format(tree, format);
 

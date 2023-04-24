@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Json {
 
-    public static String format(List<Map> tree) throws JsonProcessingException {
+    public static String format(List<Map<String, Object>> tree) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tree);
         return jsonString;

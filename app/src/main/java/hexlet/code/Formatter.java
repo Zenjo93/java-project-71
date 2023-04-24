@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Formatter {
 
-    public static String format(List<Map> tree, String format) throws Exception {
+    public static String format(List<Map<String, Object>> tree, String format) throws Exception {
         if (format.equals("stylish")) {
             return Stylish.format(tree);
         }

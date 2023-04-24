@@ -8,18 +8,21 @@ public class Stylish {
 
     private static final int INDENT_COUNT = 4;
 
-    public static String format(List<Map> tree) {
+    public static String format(List<Map<String, Object>> tree) {
         StringBuilder diffTree = new StringBuilder("{\n");
-
-        String stringTree = tree.stream().map(Stylish::mapping).collect(Collectors.joining("\n"));
+        String stringTree = tree.stream().map(node -> {
+            try {
+                return mapping(node);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.joining("\n"));
 
         diffTree.append(stringTree).append("\n}");
-
         return diffTree.toString();
-
     }
 
-    private static String mapping(Map<String, Object> node) {
+    private static String mapping(Map<String, Object> node) throws Exception {
         String type = (String) node.get("type");
 
         switch (type) {
@@ -36,9 +39,7 @@ public class Stylish {
                 return " " + " - " + node.get("name") + ": " + stringify(node.get("value1")) + "\n"
                         + " " + " + " + node.get("name") + ": " + stringify(node.get("value2"));
             }
-            default -> {
-                return "";
-            }
+            default -> throw new Exception("unknown type");
         }
     }
 
@@ -47,6 +48,5 @@ public class Stylish {
             return "null";
         }
         return value.toString();
-
     }
 }
