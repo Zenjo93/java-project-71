@@ -7,20 +7,13 @@ import java.util.stream.Collectors;
 public class Plain {
     public static String format(List<Map<String, Object>> tree) {
         StringBuilder diffTree = new StringBuilder();
-
-        String stringTree = tree.stream().map(node -> {
-            try {
-                return mapping(node);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.joining());
+        String stringTree = tree.stream().map(Plain::mapping).collect(Collectors.joining());
 
         diffTree.append(stringTree);
         return diffTree.toString().trim();
     }
 
-    private static String mapping(Map<String, Object> node) throws Exception {
+    private static String mapping(Map<String, Object> node)  {
         String type = (String) node.get("type");
         switch (type) {
             case "added" -> {
@@ -37,7 +30,7 @@ public class Plain {
             case "unchanged" -> {
                 return "";
             }
-            default -> throw new Exception("Unknown type");
+            default -> throw new RuntimeException("Unknown type");
         }
     }
 

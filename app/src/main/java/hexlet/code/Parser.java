@@ -15,10 +15,7 @@ public class Parser {
         } else if (dataType.equals("yml") || dataType.equals("yaml")) {
             return new YAMLMapper().readValue(content, new TypeReference<TreeMap<String, Object>>() { });
         } else {
-            throw new Exception("unknown format");
+            throw new RuntimeException("unknown format");
         }
-
     }
-
-
 }
