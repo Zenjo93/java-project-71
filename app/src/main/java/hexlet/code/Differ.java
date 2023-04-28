@@ -22,8 +22,8 @@ public class Differ {
 
     private static String makeDiff(String path1, String path2, String format) throws Exception {
 
-        String file1 = readFile(path1);
-        String file2 = readFile(path2);
+        String file1 = readData(path1);
+        String file2 = readData(path2);
 
         String fileType1 = getFileType(path1);
         String fileType2 = getFileType(path2);
@@ -33,18 +33,14 @@ public class Differ {
 
         List<Map<String, Object>> tree = AbstractSyntaxTreeBuilder.build(data1, data2);
 
-        String diff = Formatter.format(tree, format);
-
-        System.out.println(diff);
-
-        return diff;
+        return Formatter.format(tree, format);
     }
 
     public static String getFileType(String file) {
         return file.substring(file.lastIndexOf(".") + 1);
     }
 
-    public static String readFile(String path) throws Exception {
+    public static String readData(String path) throws Exception {
         Path absolutePath = Paths.get(path).toAbsolutePath().normalize();
         return Files.readString(absolutePath);
     }

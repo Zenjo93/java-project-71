@@ -10,7 +10,7 @@ For installing: clone repo to your computer and run ```make run-dist``` from /ap
 
 ## Description
 You can use program like CLI utility via ```./build/install/app/bin/app``` command in terminal or like import package: 
-```
+``` java
 import hexlet.code.Differ;
 
 var diff = Differ.generate(filePath1, filePath2);

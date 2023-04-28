@@ -27,6 +27,10 @@ public class DifferTest {
         return basePath.resolve(filePath).normalize();
     }
 
+    public static String readFixture(Path fixturePath) throws IOException {
+        return Files.readString(fixturePath);
+    }
+
     @BeforeAll
     public static void initVariables() throws IOException {
         mapper = new ObjectMapper();
@@ -37,21 +41,33 @@ public class DifferTest {
         ymlPath1 = getAbsolutePath("file1.yml").toString();
         ymlPath2 = getAbsolutePath("file2.yml").toString();
 
-        stylishExpected = Files.readString(getAbsolutePath("stylishExpected.txt"));
-        plainExpected = Files.readString(getAbsolutePath("plainExpected.txt"));
-        jsonExpected = Files.readString(getAbsolutePath("jsonExpected.json"));
+        stylishExpected = readFixture(getAbsolutePath("stylishExpected.txt"));
+        plainExpected = readFixture(getAbsolutePath("plainExpected.txt"));
+        jsonExpected = readFixture(getAbsolutePath("jsonExpected.json"));
+    }
+
+    @Test
+    @DisplayName("Format default (stylish): json files")
+    public void testGenerateDefaultStylishJson() throws Exception {
+        assertEquals(stylishExpected, Differ.generate(jsonPath1, jsonPath2));
+    }
+
+    @Test
+    @DisplayName("Format default (stylish): yml files")
+    public void testGenerateDefaultStylishYml() throws Exception {
+        assertEquals(stylishExpected, Differ.generate(ymlPath1, ymlPath2));
     }
 
     @Test
     @DisplayName("Format stylish: json files")
     public void testGenerateStylishJson() throws Exception {
-        assertEquals(stylishExpected, Differ.generate(jsonPath1, jsonPath2));
+        assertEquals(stylishExpected, Differ.generate(jsonPath1, jsonPath2, "stylish"));
     }
 
     @Test
     @DisplayName("Format stylish: yml files")
     public void testGenerateStylishYml() throws Exception {
-        assertEquals(stylishExpected, Differ.generate(ymlPath1, ymlPath2));
+        assertEquals(stylishExpected, Differ.generate(ymlPath1, ymlPath2, "stylish"));
     }
 
     @Test
@@ -68,7 +84,7 @@ public class DifferTest {
 
     @Test
     @DisplayName("Format json: json files")
-    public void testGenerateJsonfromJson() throws Exception {
+    public void testGenerateJsonFromJson() throws Exception {
         String actual = Differ.generate(jsonPath1, jsonPath2, "json");
         assertEquals(mapper.readTree(jsonExpected), mapper.readTree(actual));
     }
